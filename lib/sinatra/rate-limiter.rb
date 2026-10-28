@@ -41,10 +41,10 @@ module Sinatra
 
         if (limits.size < 1)
           raise ArgumentError, 'No explicit or default limits values provided.'
-        elsif (limits.map{|a| a.class}.select{|a| a != Integer}.count > 0)
+        elsif limits.any? { |limit| !limit.is_a?(Integer) }
           raise ArgumentError, 'Non-Integer parameters supplied. All parameters must be Integer except the first which may be a String.'
         elsif ((limits.map{|a| a.class}.size % 2) != 0)
-          raise ArgumentError, 'Wrong number of Fixnum parameters supplied.'
+          raise ArgumentError, 'Wrong number of Integer parameters supplied.'
         elsif !(bucket =~ /^[a-zA-Z0-9\-]*$/)
           raise ArgumentError, 'Limit name must be a String containing only a-z, A-Z, 0-9, and -.'
         end
